@@ -59,9 +59,9 @@ body {
   will-change: transform;
 }
 
-/* Add the rotate-180 class for the portfolio flip effect */
-.main-layout.rotate-180 {
-  transform: rotateY(180deg);
+/* Simplified animation approach - no more 3D transforms */
+.main-layout.fading {
+  opacity: 0.2; /* Fade main content when portfolio is active */
 }
 
 /* Create the opacity effect for content on the back side when front is shown */
@@ -97,7 +97,7 @@ body {
   z-index: 4;
 }
 
-/* Portfolio page styling */
+/* Portfolio page styling - simplified approach */
 .portfolio-page {
   position: fixed;
   top: 0;
@@ -105,23 +105,22 @@ body {
   width: 100%;
   height: 100vh;
   background: #fff;
-  z-index: -1; /* Behind everything initially */
-  transform: rotateY(180deg);
-  backface-visibility: hidden;
-  display: none; /* Initially hidden */
+  z-index: -1;
+  display: none; /* Hidden by default */
   overflow-y: auto;
   overflow-x: hidden;
-  opacity: 0;
-  pointer-events: none;
+  transform: none !important; /* Prevent inversion */
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  perspective: none !important;
 }
 
+/* When active, just show it without transforms */
 .portfolio-page.portfolio-active {
-  display: block !important; /* Force display when active */
+  display: block !important;
   opacity: 1 !important;
+  z-index: 1000 !important; /* Very high z-index to ensure visibility */
   pointer-events: auto !important;
-  z-index: 100 !important;
-  backface-visibility: visible !important;
-  visibility: visible !important;
 }
 
 /* Info page styling */
@@ -174,10 +173,11 @@ body {
 }
 
 .portfolio-page .close-button {
-  left: 20px;
-  transform: rotateY(180deg);
+  right: 20px;
+  left: auto;
+  transform: none;
   color: black;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  top: 20px;
 }
 
 /* Content styles for different pages */
@@ -212,6 +212,7 @@ body {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  margin-top: 40px;
 }
 
 .portfolio-table tr[data-project] {
@@ -219,6 +220,7 @@ body {
   transition: opacity 0.3s, transform 0.3s;
   opacity: 0;
   transform: translateY(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .portfolio-table tr[data-project].element-visible {
@@ -227,32 +229,29 @@ body {
 }
 
 .portfolio-table tr:not([data-project]) {
-  background-color: #f9f9f9;
+  background-color: transparent;
 }
 
 .portfolio-table td {
   padding: 20px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .portfolio-table td:first-child {
   font-weight: 500;
-  width: 30%;
+  width: 35%;
+  text-align: left;
 }
 
 .portfolio-table td:nth-child(2) {
-  width: 40%;
-  color: rgba(0,0,0,0.7);
+  width: 45%;
+  color: rgba(0,0,0,0.8);
+  text-align: left;
 }
 
 .portfolio-table td:nth-child(3) {
-  width: 15%;
-  color: rgba(0,0,0,0.7);
-}
-
-.portfolio-table td:last-child {
-  width: 15%;
-  text-align: right;
+  width: 20%;
+  color: rgba(0,0,0,0.8);
+  text-align: left;
 }
 
 .expand-icon {
@@ -276,7 +275,7 @@ body {
 
 .project-images.active {
   max-height: 800px;
-  padding: 30px 0;
+  padding: 0;
   opacity: 1;
 }
 
@@ -286,17 +285,19 @@ body {
 
 .image-container {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  gap: 16px;
+  margin: 24px 0 40px 0;
+  padding-bottom: 16px;
+  flex-wrap: nowrap;
 }
 
 .image-container img {
-  max-width: 100%;
-  height: auto;
-  flex: 1 0 300px;
+  height: 260px;
+  width: auto;
   object-fit: cover;
-  border-radius: 4px;
+  flex-shrink: 0;
+  border-radius: 0;
 }
 
 .project-description {
@@ -305,12 +306,10 @@ body {
   color: rgba(0,0,0,0.8);
 }
 
-/* True page flip animation for portfolio */
+/* Removed 3D transforms that were causing inversion issues */
 .rotate-180 {
-  transform: rotateY(180deg); /* Rotate on Y axis like a page flip */
-  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+  transition: opacity 0.5s ease;
+  transform: none !important;
 }
 
 .top-row,
@@ -430,6 +429,17 @@ a:hover {
   object-fit: cover;
 }
 
+.portfolio-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 40px 80px 40px;
+}
+
+/* Remove header styling that was in the previous version */
+.portfolio-header {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .giant-name {
     font-size: 22vw;
@@ -533,7 +543,7 @@ a:hover {
   
   /* Adjust rotation for small screens */
   .rotate-180 {
-    transform: rotateY(180deg) scale(0.95);
+    transform: none !important;
   }
 }
 
@@ -554,7 +564,7 @@ a:hover {
   }
   
   .portfolio-page.portfolio-active {
-    transform: rotateY(180deg) !important;
+    transform: none !important;
   }
   
   .main-layout.rotate-180 .portfolio-page {
