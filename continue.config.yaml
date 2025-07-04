@@ -1,0 +1,73 @@
+# continue.config.yaml
+
+defaultModel:
+  id: dolphin3:8b
+  provider: ollama
+
+models:
+  - id: dolphin3:8b
+    provider: ollama
+    isDefault: true
+
+# Optional: Add other models if you switch between LLMs
+# - id: codellama:8b
+#   provider: ollama
+
+project:
+  root: .
+  allowFileSearch: true
+  contextStrategy: embedding
+
+ui:
+  chatPosition: right
+  autoHideChat: false
+
+commands:
+  - name: "Compare styles to reference screenshot"
+    description: "Compare local CSS/HTML to the visual design in a reference image."
+    prompt: |
+      You are a front-end code reviewer. Compare the current folder’s styles and layout (HTML/CSS/JS/React) to the design in reference.png located in the project folder. Highlight mismatches in spacing, typography, layout, and colors. Suggest exact CSS or component changes.
+
+  - name: "Audit design consistency"
+    description: "Scan the entire project for disorganised layout, inconsistent naming, and unused code."
+    prompt: |
+      Review the entire project for inconsistent naming conventions, duplicated styles, deeply nested components, unstructured folders, and dead code. Suggest a plan to clean up the codebase for maintainability and design consistency.
+
+# Optional: auto-load
+customCommands:
+  - name: 🔍 Compare Layout with Visual Reference
+    description: Analyze project files against reference.png for layout and style mismatches.
+    prompt: |
+      You are a frontend QA and design alignment assistant.
+
+      A screenshot named `reference.png` is located in the root of this project. It shows the intended final design.
+
+      Please do the following:
+      1. Load and visually interpret `reference.png`.
+      2. Open and analyze the following files:
+         - `index.html`
+         - All CSS or JS files related to layout in `src/` or the root folder.
+      3. Compare actual styles and structure with what’s shown in the reference image.
+      4. Identify layout mismatches, typography issues, incorrect spacing, colours, and component hierarchy differences.
+      5. For each issue, specify:
+         - File and line if possible.
+         - Exact fix or replacement.
+      6. Output all recommendations in grouped, clean bullet points.
+
+      Assume user wants to match the visual design perfectly.
+
+---
+
+### ✅ Step 2: Use it in Command Palette
+
+Once you've saved that:
+
+1. Press `Ctrl+Shift+P`
+2. Type and run `Continue: Rebuild codebase index`
+3. Then again, `Ctrl+Shift+P` → **`Continue: 🔍 Compare Layout with Visual Reference`**
+
+---
+
+### 💡 Optional Improvements
+
+- If you use **Tailwind CSS**, add this to the prompt:

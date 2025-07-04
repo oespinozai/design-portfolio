@@ -1,0 +1,371 @@
+// Wait for document to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // References to main elements
+  const mainLayout     po    // Create portfolio page with projects table
+  function createPortfolioPage() {
+    const portfolioPage = document.createElement('div');
+    portfolioPage.className = 'portfolio-page';
+    
+    // Add HTML content all at once
+    portfolioPage.innerHTML = `
+      <div class="close-button">✕</div>
+      <div class="portfolio-content">
+        <div class="portfolio-header">
+          <h2>Recent Projects</h2>
+        </div>
+        <table class="portfolio-table">
+          <tbody>`Page.innerHTML = `
+      <div class="close-button">✕</div>
+      <div class="portfolio-content">
+        <div class="portfolio-header">
+          <h2>Recent Projects</h2>
+        </div>
+        <table class="portfolio-table">`Page.innerHTML = `
+      <div class="close-button">✕</div>
+      <div class="portfolio-content">
+        <div class="portfolio-header">
+          <h2>Recent Projects</h2>
+        </div>
+        <table class="portfolio-table">`ent.querySelector('.main-layout');
+  const infoRight = document.querySelector('.info-right');
+  const giantName = document.querySelector('.giant-name');
+  
+  // Function to toggle info page
+  function showInfo() {
+    // Hide main content elements
+    document.querySelectorAll('.top-row, .middle-row, .giant-name, .corner-icon').forEach(el => {
+      el.style.opacity = '0';
+      el.style.zIndex = '-1';
+    });
+    
+    // Show the info page (we'll add it in a moment)
+    const infoPage = document.querySelector('.info-page') || createInfoPage();
+    infoPage.style.display = 'block';
+    setTimeout(() => {
+      infoPage.style.opacity = '1';
+      infoPage.style.zIndex = '9';
+    }, 10);
+    
+    // Update URL/history
+    window.history.pushState("", "", "?s=info");
+  }
+  
+  // Function to hide info page and show main content
+  function hideInfo() {
+    // Hide the info page
+    const infoPage = document.querySelector('.info-page');
+    if (infoPage) {
+      infoPage.style.opacity = '0';
+      infoPage.style.zIndex = '-1';
+      
+      // Show main content again
+      setTimeout(() => {
+        infoPage.style.display = 'none';
+        document.querySelectorAll('.top-row, .middle-row, .giant-name, .corner-icon').forEach(el => {
+          el.style.opacity = '1';
+          el.style.zIndex = '1';
+        });
+      }, 300);
+    }
+    
+    // Update URL/history
+    window.history.pushState("", "", "/");
+  }
+  
+  // Portfolio functionality - true page flip effect
+  function showPortfolio() {
+    // Create portfolio page if it doesn't exist
+    const portfolioPage = document.querySelector('.portfolio-page') || createPortfolioPage();
+    
+    // Hide main content elements for clean flip
+    document.querySelectorAll('.top-row, .middle-row, .giant-name').forEach(el => {
+      el.style.opacity = '0';
+      el.style.zIndex = '-1';
+    });
+    
+    // Hide corner icons completely when showing portfolio
+    document.querySelector('.corner-icon').style.display = 'none';
+    
+    // Prepare portfolio to be visible after flip
+    setTimeout(() => {
+      portfolioPage.classList.add('portfolio-active');
+    }, 400); // Wait for half the animation time
+    
+    // Apply page flip animation to the whole layout
+    mainLayout.classList.add('rotate-180');
+    
+    // Add subtle shadow to create an impression of the other side
+    document.querySelector('.main-layout').classList.add('showing-back');
+    
+    // Stagger the appearance of table rows for a nice effect
+    setTimeout(() => {
+      const projectRows = portfolioPage.querySelectorAll('tr[data-project]');
+      projectRows.forEach((row, index) => {
+        setTimeout(() => {
+          row.style.opacity = '1';
+          row.style.transform = 'translateY(0)';
+        }, 100 + (index * 50));
+      });
+    }, 800); // Wait for the flip animation to complete
+    
+    // Update URL/history
+    window.history.pushState("", "", "?s=portfolio");
+  }
+  
+  // Function to hide portfolio and show main content - reverse the page flip
+  function hidePortfolio() {
+    // Remove portfolio active state first so it becomes invisible during the flip
+    const portfolioPage = document.querySelector('.portfolio-page');
+    if (portfolioPage) {
+      portfolioPage.classList.remove('portfolio-active');
+    }
+    
+    // Short delay before starting the flip back
+    setTimeout(() => {
+      // Flip back to front side
+      mainLayout.classList.remove('rotate-180');
+      document.querySelector('.main-layout').classList.remove('showing-back');
+      
+      // Show main content again after animation completes
+      setTimeout(() => {
+        // Make corner-icon visible again with display block first
+        document.querySelector('.corner-icon').style.display = 'flex';
+        
+        // Then restore opacity of all elements
+        document.querySelectorAll('.top-row, .middle-row, .giant-name, .corner-icon').forEach(el => {
+          el.style.opacity = '1';
+          el.style.zIndex = '1';
+        });
+      }, 500); // Wait for rotation to complete
+    }, 100);
+    
+    // Update URL/history
+    window.history.pushState("", "", "/");
+  }
+  
+  // Create info page if it doesn't exist
+  function createInfoPage() {
+    const infoPage = document.createElement('div');
+    infoPage.className = 'info-page';
+    infoPage.innerHTML = `
+      <div class="info-content">
+        <div class="close-button">✕</div>
+        <h2>About Oscar E.</h2>
+        <p>Oscar E. is a multidisciplinary creative based in the UK working across brand design, websites, motion, and AI-assisted workflows.</p>
+        <p>With a background in digital media and creative technology, Oscar creates functional, innovative designs that combine traditional design principles with emerging technologies.</p>
+        <p>For freelance projects or creative collaborations, reach out at: info@oscaredesign.com</p>
+      </div>
+    `;
+    
+    mainLayout.appendChild(infoPage);
+    
+    // Add event listener to close button
+    const closeButton = infoPage.querySelector('.close-button');
+    closeButton.addEventListener('click', hideInfo);
+    
+    // Add ESC key functionality to close the info page
+    document.addEventListener('keyup', function(e) {
+      if (e.key === 'Escape') {
+        hideInfo();
+      }
+    });
+    
+    return infoPage;
+  }
+  
+  // Create portfolio page with projects table
+  function createPortfolioPage() {
+    const portfolioPage = document.createElement('div');
+    portfolioPage.className = 'portfolio-page';
+    portfolioPage.innerHTML = `
+      <div class="portfolio-content">
+        <div class="close-button">✕</div>
+        <div class="portfolio-header">
+          <h2>Recent Projects</h2>
+        </div>
+        <table class="portfolio-table">
+          <tbody>
+            <tr data-project="project1">
+              <td>AI-Assisted Brand System</td>
+              <td>Brand Design & AI Integration</td>
+              <td>2025</td>
+              <td><span class="expand-icon">+</span></td>
+            </tr>
+            <tr class="project-images" id="project1-images">
+              <td colspan="4">
+                <div class="image-container">
+                  <img src="/images/projects/project1/image1.jpg" alt="AI-Assisted Brand System - Image 1">
+                  <img src="/images/projects/project1/image2.jpg" alt="AI-Assisted Brand System - Image 2">
+                </div>
+                <div class="project-description">
+                  <p>A comprehensive brand system that uses AI to generate consistent visual assets while maintaining brand integrity. The system includes automated workflows for creating marketing materials at scale.</p>
+                  <p><a href="#" class="project-link">View case study →</a></p>
+                </div>
+              </td>
+            </tr>
+            <tr data-project="project2">
+              <td>Creative Process Platform</td>
+              <td>Web Design & Development</td>
+              <td>2025</td>
+              <td><span class="expand-icon">+</span></td>
+            </tr>
+            <tr class="project-images" id="project2-images">
+              <td colspan="4">
+                <div class="image-container">
+                  <img src="/images/projects/project2/image1.jpg" alt="Creative Process Platform - Image 1">
+                  <img src="/images/projects/project2/image2.jpg" alt="Creative Process Platform - Image 2">
+                </div>
+                <div class="project-description">
+                  <p>An interactive web platform showcasing creative processes and experimental design techniques. Features innovative navigation and responsive design focused on storytelling.</p>
+                  <p><a href="#" class="project-link">View case study →</a></p>
+                </div>
+              </td>
+            </tr>
+            <tr data-project="project3">
+              <td>Generative Motion System</td>
+              <td>Motion Design & Creative Coding</td>
+              <td>2024</td>
+              <td><span class="expand-icon">+</span></td>
+            </tr>
+            <tr class="project-images" id="project3-images">
+              <td colspan="4">
+                <div class="image-container">
+                  <img src="/images/projects/project3/image1.jpg" alt="Generative Motion System - Image 1">
+                </div>
+                <div class="project-description">
+                  <p>A custom-built generative motion system that creates unique animations based on sound input. Used for live performances and brand activations.</p>
+                  <p><a href="#" class="project-link">View case study →</a></p>
+                </div>
+              </td>
+            </tr>
+            <tr data-project="project4">
+              <td>Experimental Interface Lab</td>
+              <td>UX Design & Prototyping</td>
+              <td>2024</td>
+              <td><span class="expand-icon">+</span></td>
+            </tr>
+            <tr class="project-images" id="project4-images">
+              <td colspan="4">
+                <div class="image-container">
+                  <img src="/images/projects/project4/image1.jpg" alt="Experimental Interface Lab - Image 1">
+                  <img src="/images/projects/project4/image2.jpg" alt="Experimental Interface Lab - Image 2">
+                  <img src="/images/projects/project4/image3.jpg" alt="Experimental Interface Lab - Image 3">
+                </div>
+                <div class="project-description">
+                  <p>A series of experimental interface prototypes exploring new ways of human-computer interaction. Includes voice-controlled interfaces, gestural inputs, and haptic feedback systems.</p>
+                  <p><a href="#" class="project-link">View case study →</a></p>
+                </div>
+              </td>
+            </tr>
+            <tr data-project="project5">
+              <td>Automated Content Studio</td>
+              <td>Content Creation & Automation</td>
+              <td>2023</td>
+              <td><span class="expand-icon">+</span></td>
+            </tr>
+            <tr class="project-images" id="project5-images">
+              <td colspan="4">
+                <div class="image-container">
+                  <img src="/images/projects/project5/image1.jpg" alt="Automated Content Studio - Image 1">
+                </div>
+                <div class="project-description">
+                  <p>A suite of automation tools that streamline content creation for digital platforms. Combines design templates, AI-assisted copywriting, and publishing workflows.</p>
+                  <p><a href="#" class="project-link">View case study →</a></p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `;
+    
+    mainLayout.appendChild(portfolioPage);
+    
+    // Add event listener to close button
+    const closeButton = portfolioPage.querySelector('.close-button');
+    if (closeButton) {
+      closeButton.addEventListener('click', hidePortfolio);
+      // Ensure the close button is visible and properly positioned
+      closeButton.style.display = 'flex'; // Use flex instead of block for better centering
+      closeButton.style.zIndex = '1000';
+      // Make sure it's properly visible when flipped
+      closeButton.style.transform = 'rotateY(180deg)';
+    }
+    
+    // Add ESC key functionality to close the portfolio page
+    document.addEventListener('keyup', function(e) {
+      if (e.key === 'Escape' && portfolioPage.classList.contains('portfolio-active')) {
+        hidePortfolio();
+      }
+    });
+    
+    // Add click handlers for project rows
+    const projectRows = portfolioPage.querySelectorAll('tr[data-project]');
+    projectRows.forEach(row => {
+      row.addEventListener('click', function() {
+        const projectId = this.getAttribute('data-project');
+        const imagesRow = document.getElementById(projectId + '-images');
+        const expandIcon = this.querySelector('.expand-icon');
+        
+        // Close any other open project rows
+        portfolioPage.querySelectorAll('.project-images.active').forEach(active => {
+          if (active.id !== projectId + '-images') {
+            active.classList.remove('active');
+            // Reset other expand icons
+            const otherRow = portfolioPage.querySelector(`tr[data-project="${active.id.replace('-images', '')}"]`);
+            if (otherRow) {
+              otherRow.querySelector('.expand-icon').textContent = '+';
+            }
+          }
+        });
+        
+        // Toggle active class to show/hide images
+        imagesRow.classList.toggle('active');
+        
+        // Toggle plus/minus icon
+        expandIcon.textContent = imagesRow.classList.contains('active') ? '−' : '+';
+        
+        // Scroll to make the expanded content visible if needed
+        if (imagesRow.classList.contains('active')) {
+          setTimeout(() => {
+            imagesRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 100);
+        }
+      });
+    });
+    
+    return portfolioPage;
+  }
+  
+  // Add click event to INFO button
+  if (infoRight) {
+    infoRight.addEventListener('click', showInfo);
+  }
+  
+  // Add click event to Portfolio link
+  const portfolioLink = document.querySelector('.col.portfolio');
+  if (portfolioLink) {
+    portfolioLink.addEventListener('click', showPortfolio);
+  }
+  
+  // Check URL on page load to see if we should show a specific page
+  const urlParams = new URLSearchParams(window.location.search);
+  const section = urlParams.get('s');
+  if (section === 'info') {
+    showInfo();
+  } else if (section === 'portfolio') {
+    showPortfolio();
+  }
+  
+  // Adjust height on window resize
+  function adjustHeight() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  
+  // Run once on page load
+  adjustHeight();
+  
+  // Re-run when window is resized
+  window.addEventListener('resize', adjustHeight);
+});
