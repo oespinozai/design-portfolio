@@ -1,12 +1,45 @@
-# React + Vite
+# Design Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive web design portfolio with interactive features including:
+- 3D page flip animation for portfolio display
+- Info overlay with project details
+- Grid-based layout system
+- Responsive design for all devices
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/design-portfolio.git
 
-## Expanding the ESLint configuration
+# Navigate to the project directory
+cd design-portfolio
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+## Features
+
+- Clean, minimal design inspired by https://www.giuliaboggio.xyz
+- Interactive portfolio page with 3D flip animation
+- Project details with expandable image galleries
+- Responsive design that works on all devices
+- Cross-browser compatibility (Chrome, Firefox, Edge)
+
+## Technologies Used
+
+- HTML5
+- CSS3 (Grid, Flexbox, 3D Transforms)
+- Vanilla JavaScript (ES6+)
+- Vite for development and building
+
+## Browser Support
+
+Tested and working in:
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
