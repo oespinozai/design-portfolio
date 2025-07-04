@@ -10,7 +10,7 @@ A responsive web design portfolio with interactive features including:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/design-portfolio.git
+git clone https://github.com/oespinozai/design-portfolio.git
 
 # Navigate to the project directory
 cd design-portfolio

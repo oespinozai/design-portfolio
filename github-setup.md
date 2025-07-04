@@ -16,9 +16,8 @@ Follow these steps to push your local project to GitHub:
 
 3. Connect your local repository to GitHub:
    ```bash
-   # Replace YOUR_USERNAME with your actual GitHub username
-   # Replace REPO_NAME with your repository name (e.g., design-portfolio)
-   git remote add origin https://github.com/YOUR_USERNAME/REPO_NAME.git
+   # Using your GitHub repository URL
+   git remote add origin https://github.com/oespinozai/design-portfolio.git
    ```
 
 4. Push your code to GitHub:
@@ -32,7 +31,7 @@ That's it! Your code is now on GitHub and you can clone it on any other device.
 
 To clone on your laptop tomorrow:
 ```bash
-git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
+git clone https://github.com/oespinozai/design-portfolio.git
 cd REPO_NAME
 npm install
 npm run dev
