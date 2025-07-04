@@ -72,18 +72,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Portfolio should be visible now - SIMPLIFIED VERSION');
 
-    // Load project rows with a staggered animation
-    setTimeout(() => {
-      const projectRows = portfolioPage.querySelectorAll('.portfolio-table tr[data-project]');
-      projectRows.forEach((row, i) => {
-        setTimeout(() => {
-          row.style.opacity = '1';
-          row.style.transform = 'translateY(0)';
-          // Add element-visible class for consistent state management
-          row.classList.add('element-visible');
-        }, i * 70);
-      });
-    }, 100);
+    // Make all project rows immediately visible instead of staggered
+    const projectRows = portfolioPage.querySelectorAll('.portfolio-table tr[data-project]');
+    projectRows.forEach(row => {
+      row.style.opacity = '1';
+      row.style.transform = 'translateY(0)';
+      row.classList.add('element-visible');
+    });
 
     window.history.pushState("", "", "?s=portfolio");
   }

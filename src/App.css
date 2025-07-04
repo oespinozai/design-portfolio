@@ -153,7 +153,7 @@ body {
   cursor: pointer;
   opacity: 0.8;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: transparent;
   width: 36px;
   height: 36px;
   display: flex;
@@ -233,7 +233,7 @@ body {
 }
 
 .portfolio-table td {
-  padding: 20px 0;
+  padding: 12px 0;
 }
 
 .portfolio-table td:first-child {
@@ -281,23 +281,26 @@ body {
 
 .project-images td {
   padding: 0;
+  border-bottom: none;
 }
 
 .image-container {
   display: flex;
   overflow-x: auto;
   gap: 16px;
-  margin: 24px 0 40px 0;
-  padding-bottom: 16px;
+  margin: 16px 0 24px 0;
+  padding-bottom: 8px;
   flex-wrap: nowrap;
+  width: 100%;
 }
 
 .image-container img {
-  height: 260px;
+  height: 220px;
   width: auto;
   object-fit: cover;
   flex-shrink: 0;
   border-radius: 0;
+  margin-top: 8px;
 }
 
 .project-description {
@@ -432,7 +435,7 @@ a:hover {
 .portfolio-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 40px 80px 40px;
+  padding: 20px 40px 40px 40px;
 }
 
 /* Remove header styling that was in the previous version */
